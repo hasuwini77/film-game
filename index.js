@@ -22,6 +22,13 @@ const MARTIN_FILMS = [
   "gangs of new york",
   "the aviator",
 ];
+const STEVEN_TIPS = [
+  "Extraterrest?",
+  "Sharks?",
+  "Peter Pan?",
+  "Dinosaur?",
+  "Fake Airplane Pilot?",
+];
 
 // initialising some let
 let stevenPick = STEVEN_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
@@ -54,18 +61,37 @@ const playGame = () => {
         .split("")
         .map((char) => (char === " " ? "   " : "_ "))
         .join("");
-      guessFilm = prompt(
-        `Attempt ${attempt}: ` +
-          `\n The Film You Need to guess` +
-          `\nHas ${stevenPick.length} characters (including spaces)` +
-          `\nThis is how it should look` +
-          `\n${underscores}` +
-          `\nMake your guess now!`
-      );
+
+      if (attempt <= 2) {
+        guessFilm = prompt(
+          `Attempt ${attempt}: ` +
+            `\nThe Film You Need to guess` +
+            `\nHas ${stevenPick.length} characters (including spaces)` +
+            `\nThis is how it should look` +
+            `\n${underscores}` +
+            `\nMake your guess now!`
+        );
+      } else if (attempt >= 3 && attempt <= 5) {
+        let newSteveTips = STEVEN_TIPS[STEVEN_FILMS.indexOf(stevenPick)];
+        guessFilm = prompt(
+          `Attempt ${attempt}: ` +
+            `\nThe Film You Need to guess` +
+            `\nHas ${stevenPick.length} characters (including spaces)` +
+            `\nHere comes a TIP for ya` +
+            `\n~~~~~~~~~~~~~~~~~~~~~~~~` +
+            `\n${newSteveTips}` +
+            `\n~~~~~~~~~~~~~~~~~~~~~~~~` +
+            `\n${underscores}` +
+            `\nC'mon You Got this!`
+        );
+      }
 
       if (guessFilm !== null) {
         if (guessFilm.toLowerCase() === stevenPick) {
-          alert("Congratulations, you got it right!");
+          alert("Congratulations, you're a LEGEND!!");
+          break;
+        } else if (attempt >= 5) {
+          alert("Sorry, you're out of attempts!");
           break;
         } else {
           alert("Incorrect guess. Try again!");
