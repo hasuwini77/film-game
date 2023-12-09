@@ -11,3 +11,7 @@ First thing:
 - if 3 guesses fails, a hint comes
 
 - if User guess the film before 5 Guess - Winner else Loser
+
+New version
+- Add regex for verification of directors
+- Find a way to add a while loop, perhaps a new logic or newgame logic

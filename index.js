@@ -13,10 +13,14 @@ let stevenPick = STEVEN_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let ridleyPick = RIDLEY_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let martinPick = MARTIN_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let guessFilm = [];
+let myRegex = /^[a-zA-Z\s]+$/; // maybe adding a regex here for the directors
 
-let directorChoice = prompt(
-  " ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]"
-);
+let directorChoice = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+
+// verification of letters
+if (myRegex.test(directorChoice) === false) {
+  alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
+}
 
 directorChoice = directorChoice.toLowerCase();
 
@@ -32,14 +36,7 @@ const playGame = () => {
         .join("");
 
       if (attempt <= 2) {
-        guessFilm = prompt(
-          `Attempt ${attempt}: ` +
-            `\nThe Film You Need to guess` +
-            `\nHas ${stevenPick.length} characters (including spaces)` +
-            `\nThis is how it should look` +
-            `\n${underscores}` +
-            `\nMake your guess now!`
-        );
+        guessFilm = prompt(`Attempt ${attempt}: ` + `\nThe Film You Need to guess` + `\nHas ${stevenPick.length} characters (including spaces)` + `\nThis is how it should look` + `\n${underscores}` + `\nMake your guess now!`);
       } else if (attempt >= 3 && attempt <= 5) {
         let newSteveTips = STEVEN_TIPS[STEVEN_FILMS.indexOf(stevenPick)];
         guessFilm = prompt(
@@ -78,14 +75,7 @@ const playGame = () => {
         .join("");
 
       if (attempt <= 2) {
-        guessFilm = prompt(
-          `Attempt ${attempt}: ` +
-            `\nThe Film You Need to guess` +
-            `\nHas ${ridleyPick.length} characters (including spaces)` +
-            `\nThis is how it should look` +
-            `\n${underscores}` +
-            `\nMake your guess now!`
-        );
+        guessFilm = prompt(`Attempt ${attempt}: ` + `\nThe Film You Need to guess` + `\nHas ${ridleyPick.length} characters (including spaces)` + `\nThis is how it should look` + `\n${underscores}` + `\nMake your guess now!`);
       } else if (attempt >= 3 && attempt <= 5) {
         let newRidleyTips = RIDLEY_TIPS[RIDLEY_FILMS.indexOf(ridleyPick)];
         guessFilm = prompt(
@@ -124,14 +114,7 @@ const playGame = () => {
         .join("");
 
       if (attempt <= 2) {
-        guessFilm = prompt(
-          `Attempt ${attempt}: ` +
-            `\nThe Film You Need to guess` +
-            `\nHas ${martinPick.length} characters (including spaces)` +
-            `\nThis is how it should look` +
-            `\n${underscores}` +
-            `\nMake your guess now!`
-        );
+        guessFilm = prompt(`Attempt ${attempt}: ` + `\nThe Film You Need to guess` + `\nHas ${martinPick.length} characters (including spaces)` + `\nThis is how it should look` + `\n${underscores}` + `\nMake your guess now!`);
       } else if (attempt >= 3 && attempt <= 5) {
         let newMartinTips = MARTIN_TIPS[MARTIN_FILMS.indexOf(martinPick)];
         guessFilm = prompt(
@@ -165,9 +148,28 @@ const playGame = () => {
   }
 };
 
-if (DIRECTORS.includes(directorChoice)) {
-  alert("You do have great Taste" + "\n I would have chosen the same ;)");
-  playGame();
-} else {
-  console.log("Invalid director choice!");
+// New fix with while loop
+let isValidChoice = false;
+
+while (!isValidChoice) {
+  directorChoice = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+
+  if (directorChoice === null) {
+    const userDecision = confirm("C'mon dude you suck! Don't you want to play the game?");
+    if (userDecision) {
+      continue;
+    } else {
+      break;
+    }
+  }
+
+  if (DIRECTORS.includes(directorChoice) && myRegex.test(directorChoice)) {
+    alert("You do have great taste!\nI would have chosen the same ;)");
+    playGame();
+    isValidChoice = true;
+  } else if (myRegex.test(directorChoice) === false) {
+    alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
+  } else {
+    alert("Invalid director choice!");
+  }
 }
