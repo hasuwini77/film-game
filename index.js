@@ -13,16 +13,14 @@ let stevenPick = STEVEN_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let ridleyPick = RIDLEY_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let martinPick = MARTIN_FILMS[Math.floor(Math.random() * STEVEN_FILMS.length)];
 let guessFilm = [];
-let myRegex = /^[a-zA-Z\s]+$/; // maybe adding a regex here for the directors
+let myRegex = /^[a-zA-Z\s]+$/; // User verification with regex here for the directorChoice
 
-let directorChoice = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+let directorChoice;
 
 // verification of letters
 if (myRegex.test(directorChoice) === false) {
   alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
 }
-
-directorChoice = directorChoice.toLowerCase();
 
 // play function
 const playGame = () => {
@@ -69,7 +67,7 @@ const playGame = () => {
     }
   } else if (directorChoice === DIRECTORS[1]) {
     for (let attempt = 1; attempt <= 5; attempt++) {
-      let underscores = stevenPick
+      let underscores = ridleyPick
         .split("")
         .map((char) => (char === " " ? "   " : "_ "))
         .join("");
@@ -152,9 +150,9 @@ const playGame = () => {
 let isValidChoice = false;
 
 while (!isValidChoice) {
-  directorChoice = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+  const userInput = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
 
-  if (directorChoice === null) {
+  if (userInput === null) {
     const userDecision = confirm("C'mon dude you suck! Don't you want to play the game?");
     if (userDecision) {
       continue;
@@ -163,9 +161,11 @@ while (!isValidChoice) {
     }
   }
 
+  directorChoice = userInput.toLowerCase();
+
   if (DIRECTORS.includes(directorChoice) && myRegex.test(directorChoice)) {
     alert("You do have great taste!\nI would have chosen the same ;)");
-    playGame();
+    playGame(directorChoice);
     isValidChoice = true;
   } else if (myRegex.test(directorChoice) === false) {
     alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
