@@ -133,7 +133,7 @@ const playGame = () => {
           alert("Congratulations, you're a LEGEND!!");
           break;
         } else if (attempt >= 5) {
-          alert("Sorry, you're out of attempts!");
+          alert(`Sorry, you're out of attempts!` + `\n ** YOU LOST DA GAME ** `);
           break;
         } else {
           alert("Incorrect guess. Try again!");
