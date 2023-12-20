@@ -94,7 +94,7 @@ const playGame = () => {
           alert("Congratulations, you're a LEGEND!!");
           break;
         } else if (attempt >= 5) {
-          alert("Sorry, you're out of attempts!");
+          alert(`Sorry, you're out of attempts!` + `\n ** YOU LOST DA GAME!! **`);
           break;
         } else {
           alert("Incorrect guess. Try again!");
@@ -146,30 +146,40 @@ const playGame = () => {
   }
 };
 
-// New fix with while loop
-let isValidChoice = false;
+// New fix with two while loops
+// One for handling the replay of the game + one for the valid choice or not
+let playAgain = true;
 
-while (!isValidChoice) {
-  const userInput = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+while (playAgain) {
+  let isValidChoice = false;
 
-  if (userInput === null) {
-    const userDecision = confirm("C'mon dude you suck! Don't you want to play the game?");
-    if (userDecision) {
-      continue;
-    } else {
-      break;
+  while (!isValidChoice) {
+    const userInput = prompt(" ~~~ INSTRUCTIONS ~~~ \n" + "[- Choose your Film Director - ]\n" + "  ~~~Choose Between ~~~ \n" + "[- Steven Spielberg -  ]\n" + "[- Ridley Scott - ]\n" + "[- Martin Scorsese - ]");
+
+    if (userInput === null) {
+      const userDecision = confirm("C'mon dude you suck! Don't you want to play the game?");
+      if (userDecision) {
+        break;
+      } else {
+        playAgain = false;
+        break;
+      }
     }
-  }
 
-  directorChoice = userInput.toLowerCase();
+    directorChoice = userInput.toLowerCase();
 
-  if (DIRECTORS.includes(directorChoice) && myRegex.test(directorChoice)) {
-    alert("You do have great taste!\nI would have chosen the same ;)");
-    playGame(directorChoice);
-    isValidChoice = true;
-  } else if (myRegex.test(directorChoice) === false) {
-    alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
-  } else {
-    alert("Invalid director choice!");
+    if (DIRECTORS.includes(directorChoice) && myRegex.test(directorChoice)) {
+      alert("You do have great taste!\nI would have chosen the same ;)");
+      playGame(directorChoice);
+      isValidChoice = true;
+      const userDecision = confirm("Maybe, you wanna play again?");
+      if (!userDecision) {
+        playAgain = false;
+      }
+    } else if (myRegex.test(directorChoice) === false) {
+      alert("You need to enter letters dude!\nFrom A-Z or a-z, yeah?");
+    } else {
+      alert("Invalid director choice!");
+    }
   }
 }
